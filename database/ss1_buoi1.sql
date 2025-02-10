@@ -2,14 +2,14 @@ CREATE DATABASE student_management;
 USE student_management;
 CREATE TABLE Class (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL
+    name VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE Teacher (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(50) NOT NULL,
     age INT NOT NULL,
-    country VARCHAR(255) NOT NULL
+    country VARCHAR(50) NOT NULL
 );
 INSERT INTO Class (name)
 VALUES 
