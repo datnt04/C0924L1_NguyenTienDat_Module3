@@ -1,0 +1,34 @@
+h1 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: #444;
+    font-style: italic;
+}
+
+p {
+    font-size: 16px;
+    text-align: justify;
+    text-indent: 30px; 
+    line-height: 1.6;
+}
+
+strong {
+    font-weight: bold;
+}
+.highlight {
+    color: #0645AD; 
+    font-weight: bold;
+}
+
+a {
+    text-decoration: none;
+    color: #0645AD; 
+}
+.content{
+    width : 40%;
+}
