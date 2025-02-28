@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phim Hoạt Hình</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>Phim Hoạt Hình</header>
+    <nav>
+        <a href="#">Trang chủ</a>
+        <a href="#">Phim yêu thích</a>
+        <a href="#">Nhân vật</a>
+        <a href="#">Góp ý</a>
+    </nav>
+    <div class="container">
+        <div class="left">
+            <div class="video-item" onclick="loadVideo('https://www.youtube.com/embed/-SBBef-OEiE')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcType-LKrGhyDtAWKwsUOzl0ylI0aGxabS9cQ&s" alt="Naruto Thumbnail">
+                <p>📺 Naruto - Cuộc phiêu lưu ninja</p>
+            </div>
+            <div class="video-item" onclick="loadVideo('https://www.youtube.com/embed/UH3lrHudAQg')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWw3itMA7rIdR6v2IugtRkCGDknPL-0q-LmA&s" alt="One Piece Thumbnail">
+                <p>📺 One Piece - Hành trình của Luffy</p>
+            </div>
+            <div class="video-item" onclick="loadVideo('https://www.youtube.com/embed/iqbTEl-BvRw')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkD4cseiazfbFor1ahCYbeYXTzeqqeROxA0Q&s" alt="Dragon Ball Thumbnail">
+                <p>📺 Dragon Ball - Cuộc chiến Saiyan</p>
+            </div>
+        </div>
+        <div class="right">
+            <iframe id="video-frame" src="https://www.youtube.com/embed/-SBBef-OEiE" allowfullscreen></iframe>
+            <h2>Naruto - Cuộc phiêu lưu ninja</h2>
+            <p>Tác giả</p>
+            <p>Bộ phim kể về hành trình của Naruto trên con đường trở thành Hokage...</p>
+        </div>
+    </div>
+    <footer>Bản quyền © 2025 - Phim Hoạt Hình</footer>
+    <script>
+        function loadVideo(url) {
+            document.getElementById('video-frame').src = url;
+        }
+    </script>
+</body>
+</html>
