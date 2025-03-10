@@ -1,12 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
-<%@ page import="java.util.List" %>
-<%@ page import="model.Customer" %>
-<%@ page import="controller.CustomerDAO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%
-    List<Customer> customers = CustomerDAO.getCustomers();
-    request.setAttribute("customers", customers);
+    if (request.getAttribute("customers") == null) {
+        response.sendRedirect("customers");
+        return;
+    }
 %>
 
 <!DOCTYPE html>
@@ -20,6 +19,10 @@
             background-color: #f4f4f4;
             margin: 0;
             padding: 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
         }
         table {
             width: 80%;
@@ -41,12 +44,13 @@
         img {
             width: 80px;
             height: 80px;
-            border-radius: 2%;
+            border-radius: 50%;
         }
     </style>
 </head>
 <body>
-<h2 style="text-align: center;">Danh sách khách hàng</h2>
+<h2>Danh sách khách hàng</h2>
+
 <table>
     <tr>
         <th>Tên</th>
