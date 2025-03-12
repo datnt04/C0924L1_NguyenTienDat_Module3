@@ -18,11 +18,10 @@ public class ProductServlet extends HttpServlet {
         productService = new ProductServiceImpl();
     }
 
-    // Phương thức xử lý các yêu cầu GET
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if (action == null) {
-            action = "list"; // Mặc định là hiển thị danh sách
+            action = "list";
         }
 
         switch (action) {
@@ -42,12 +41,11 @@ public class ProductServlet extends HttpServlet {
                 showEditProductForm(request, response);
                 break;
             default:
-                listProducts(request, response); // Nếu action không hợp lệ, hiển thị danh sách mặc định
+                listProducts(request, response);
                 break;
         }
     }
 
-    // Phương thức xử lý các yêu cầu POST
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if (action == null) {
@@ -70,7 +68,6 @@ public class ProductServlet extends HttpServlet {
         }
     }
 
-    // Phương thức hiển thị danh sách sản phẩm
     private void listProducts(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Product> products = productService.getAllProducts();
         request.setAttribute("products", products);
@@ -78,7 +75,6 @@ public class ProductServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    // Phương thức hiển thị chi tiết sản phẩm
     private void showProductDetails(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int productId = Integer.parseInt(request.getParameter("id"));
         Product product = productService.getProductById(productId);
@@ -87,7 +83,6 @@ public class ProductServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    // Phương thức tìm kiếm sản phẩm
     private void searchProducts(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("searchName");
         List<Product> foundProducts = productService.searchProductsByName(name);
@@ -96,13 +91,11 @@ public class ProductServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    // Phương thức hiển thị form thêm sản phẩm
     private void showAddProductForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/view/product-form.jsp");
         dispatcher.forward(request, response);
     }
 
-    // Phương thức hiển thị form sửa sản phẩm
     private void showEditProductForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int productId = Integer.parseInt(request.getParameter("id"));
         Product product = productService.getProductById(productId);
@@ -111,7 +104,6 @@ public class ProductServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    // Phương thức thêm sản phẩm
     private void addProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("name");
         double price = Double.parseDouble(request.getParameter("price"));
@@ -122,7 +114,6 @@ public class ProductServlet extends HttpServlet {
         response.sendRedirect("product?action=list");
     }
 
-    // Phương thức cập nhật sản phẩm
     private void updateProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
@@ -134,7 +125,6 @@ public class ProductServlet extends HttpServlet {
         response.sendRedirect("product?action=list");
     }
 
-    // Phương thức xóa sản phẩm
     private void deleteProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         productService.deleteProduct(id);
