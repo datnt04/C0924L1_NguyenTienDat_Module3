@@ -109,7 +109,7 @@ public class ProductServlet extends HttpServlet {
         double price = Double.parseDouble(request.getParameter("price"));
         String description = request.getParameter("description");
         String manufacturer = request.getParameter("manufacturer");
-        Product newProduct = new Product(0, name, price, description, manufacturer); // ID tự động
+        Product newProduct = new Product(0, name, price, description, manufacturer);
         productService.addProduct(newProduct);
         response.sendRedirect("product?action=list");
     }
