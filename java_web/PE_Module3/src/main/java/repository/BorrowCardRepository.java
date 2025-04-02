@@ -18,18 +18,20 @@ public class BorrowCardRepository {
             stmt.setString(1, card.getBorrowId());
             stmt.setString(2, card.getBookId());
             stmt.setString(3, card.getStudentId());
-            stmt.setBoolean(4, card.isStatus());
+            stmt.setInt(4, 1); // Buộc ghi status = 1 (TRUE)
             stmt.setDate(5, new java.sql.Date(card.getBorrowDate().getTime()));
             stmt.setDate(6, card.getReturnDate() != null ? new java.sql.Date(card.getReturnDate().getTime()) : null);
-            stmt.executeUpdate();
+            int rows = stmt.executeUpdate();
+            System.out.println("Inserted " + rows + " rows into borrow_cards with status = 1");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error adding borrow card: " + e.getMessage());
+            throw new RuntimeException("Failed to add borrow card: " + e.getMessage(), e);
         }
     }
 
     public List<BorrowCard> getBorrowedBooks() {
         List<BorrowCard> cards = new ArrayList<>();
-        String sql = "SELECT * FROM borrow_cards WHERE status = TRUE";
+        String sql = "SELECT * FROM borrow_cards WHERE status = 1"; // Sử dụng 1 thay vì TRUE
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
@@ -43,6 +45,7 @@ public class BorrowCardRepository {
                         rs.getDate("return_date")
                 );
                 cards.add(card);
+                System.out.println("Fetched borrow card: " + card.getBorrowId() + ", Status: " + card.isStatus());
             }
         } catch (SQLException e) {
             e.printStackTrace();

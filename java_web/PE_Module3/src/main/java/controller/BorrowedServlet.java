@@ -25,14 +25,20 @@ public class BorrowedServlet extends HttpServlet {
         String studentName = req.getParameter("studentName");
         List<BorrowCard> borrowedBooks;
         if (bookTitle != null || studentName != null) {
-            borrowedBooks = borrowCardService.searchBorrowedBooks(bookTitle != null ? bookTitle : "",
-                    studentName != null ? studentName : "");
+            borrowedBooks = borrowCardService.searchBorrowedBooks(
+                    bookTitle != null ? bookTitle : "",
+                    studentName != null ? studentName : ""
+            );
         } else {
             borrowedBooks = borrowCardService.getBorrowedBooks();
         }
+        System.out.println("Borrowed books size: " + borrowedBooks.size()); // Debug
+        for (BorrowCard card : borrowedBooks) {
+            System.out.println("Borrow ID: " + card.getBorrowId() + ", Status: " + card.isStatus());
+        }
         req.setAttribute("borrowedBooks", borrowedBooks);
-        req.setAttribute("books", bookService.getAllBooks()); // Để hiển thị tên sách, tác giả
-        req.setAttribute("students", new StudentService().getAllStudents()); // Để hiển thị tên học sinh, lớp
+        req.setAttribute("books", bookService.getAllBooks());
+        req.setAttribute("students", new StudentService().getAllStudents());
         req.getRequestDispatcher("/borrowed.jsp").forward(req, resp);
     }
 

@@ -45,13 +45,23 @@ public class BorrowServlet extends HttpServlet {
         String studentId = req.getParameter("studentId");
         String returnDateStr = req.getParameter("returnDate");
 
+        // Kiểm tra định dạng borrowId
+        if (!borrowId.matches("MS-\\d{4}")) {
+            req.setAttribute("error", "Mã mượn sách phải theo định dạng MS-XXXX!");
+            req.getRequestDispatcher("/borrow.jsp").forward(req, resp);
+            return;
+        }
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         BorrowCard card = new BorrowCard();
         card.setBorrowId(borrowId);
         card.setBookId(bookId);
         card.setStudentId(studentId);
-        card.setStatus(true);
+        card.setStatus(true); // Đặt status là TRUE (đang mượn)
         card.setBorrowDate(new Date());
+
+        System.out.println("Status before adding: " + card.isStatus()); // Debug
+
         try {
             card.setReturnDate(sdf.parse(returnDateStr));
             if (card.getReturnDate().before(card.getBorrowDate())) {
@@ -65,9 +75,14 @@ public class BorrowServlet extends HttpServlet {
             return;
         }
 
-        borrowCardService.addBorrowCard(card);
-        Book book = bookService.getBookById(bookId);
-        bookService.updateQuantity(bookId, book.getQuantity() - 1);
-        resp.sendRedirect("/books");
+        try {
+            borrowCardService.addBorrowCard(card);
+            Book book = bookService.getBookById(bookId);
+            bookService.updateQuantity(bookId, book.getQuantity() - 1);
+            resp.sendRedirect("/books");
+        } catch (RuntimeException e) {
+            req.setAttribute("error", e.getMessage());
+            req.getRequestDispatcher("/borrow.jsp").forward(req, resp);
+        }
     }
 }
